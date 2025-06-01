@@ -108,66 +108,6 @@ await supabase.auth.signInWithOAuth({
 
 ---
 
-## 🔐 Supabase RLS 設定建議
-
-### ✅ profiles
-
-```sql
-CREATE POLICY "User owns their profile"
-ON profiles FOR ALL
-USING (auth.uid() = id)
-WITH CHECK (auth.uid() = id);
-```
-
-### ✅ profile_skills / profile_preferences / availability
-
-```sql
-CREATE POLICY "Manage own record"
-ON profile_skills FOR ALL
-USING (auth.uid() = profile_id)
-WITH CHECK (auth.uid() = profile_id);
-```
-
-> ⚠️ 請複製上述邏輯同樣套用至其他關聯表。
-
-### ✅ projects / missions
-
-```sql
-CREATE POLICY "Project owner access"
-ON projects FOR ALL
-USING (auth.uid() = created_by)
-WITH CHECK (auth.uid() = created_by);
-
-CREATE POLICY "Mission owner access"
-ON missions FOR ALL
-USING (auth.uid() = created_by)
-WITH CHECK (auth.uid() = created_by);
-```
-
----
-
-## 🧪 開發與執行
-
-```bash
-npm install
-npm run dev
-```
-
----
-
-## 🤝 社群與貢獻
-
-- 歡迎 Fork、PR 或提出 Issue 一同打造共創副本體驗
-- 請在提交 PR 前確保通過 Lint / Build
-
----
-
-## 🗓️ 更新紀錄
-
-最後更新：2025-06-01  
-作者：黃奇昌｜DungeonTeamUp 共創平台
-
-
 ## 🧩 資料表sql語法
 
 ### profiles（角色卡）
@@ -306,5 +246,27 @@ on missions for all
 using (auth.uid() = created_by)
 with check (auth.uid() = created_by);
 ```
+
+---
+
+## 🧪 開發與執行
+
+```bash
+npm install
+npm run dev
+```
+---
+
+## 🤝 社群與貢獻
+
+- 歡迎 Fork、PR 或提出 Issue 一同打造共創副本體驗
+- 請在提交 PR 前確保通過 Lint / Build
+
+---
+
+## 🗓️ 更新紀錄
+
+最後更新：2025-06-01  
+作者：黃奇昌｜DungeonTeamUp 共創平台
 
 ---
