@@ -166,3 +166,145 @@ npm run dev
 
 最後更新：2025-06-01  
 作者：黃奇昌｜DungeonTeamUp 共創平台
+
+
+## 🧩 資料表sql語法
+
+### profiles（角色卡）
+
+```sql
+create table profiles (
+  id uuid primary key references auth.users(id),
+  username text,
+  avatar_url text,
+  bio text,
+  style text,
+  created_at timestamptz default now()
+);
+```
+
+### skills / preferences（靜態資料）
+
+```sql
+create table skills (
+  id int generated always as identity primary key,
+  name text
+);
+
+create table preferences (
+  id int generated always as identity primary key,
+  name text
+);
+```
+
+### profile_skills / profile_preferences（多對多關聯）
+
+```sql
+create table profile_skills (
+  profile_id uuid references profiles(id),
+  skill_id int references skills(id),
+  primary key (profile_id, skill_id)
+);
+
+create table profile_preferences (
+  profile_id uuid references profiles(id),
+  preference_id int references preferences(id),
+  primary key (profile_id, preference_id)
+);
+```
+
+### availability（時間可投入）
+
+```sql
+create table availability (
+  profile_id uuid primary key references profiles(id),
+  weekly_hours int
+);
+```
+
+### projects
+
+```sql
+create table projects (
+  id uuid primary key default gen_random_uuid(),
+  title text,
+  description text,
+  created_by uuid references profiles(id),
+  created_at timestamptz default now()
+);
+```
+
+### missions
+
+```sql
+create table missions (
+  id uuid primary key default gen_random_uuid(),
+  project_id uuid references projects(id),
+  title text,
+  description text,
+  created_by uuid references profiles(id),
+  created_at timestamptz default now()
+);
+```
+
+---
+
+## 🔐 Supabase RLS 設定 SQL
+
+### profiles
+
+```sql
+alter table profiles enable row level security;
+
+create policy "Users can manage their own profile"
+on profiles for all
+using (auth.uid() = id)
+with check (auth.uid() = id);
+```
+
+### profile_skills / profile_preferences / availability
+
+```sql
+alter table profile_skills enable row level security;
+alter table profile_preferences enable row level security;
+alter table availability enable row level security;
+
+create policy "Users can manage their own skills"
+on profile_skills for all
+using (auth.uid() = profile_id)
+with check (auth.uid() = profile_id);
+
+create policy "Users can manage their own preferences"
+on profile_preferences for all
+using (auth.uid() = profile_id)
+with check (auth.uid() = profile_id);
+
+create policy "Users can manage their availability"
+on availability for all
+using (auth.uid() = profile_id)
+with check (auth.uid() = profile_id);
+```
+
+### projects
+
+```sql
+alter table projects enable row level security;
+
+create policy "Owner can manage projects"
+on projects for all
+using (auth.uid() = created_by)
+with check (auth.uid() = created_by);
+```
+
+### missions
+
+```sql
+alter table missions enable row level security;
+
+create policy "Owner can manage missions"
+on missions for all
+using (auth.uid() = created_by)
+with check (auth.uid() = created_by);
+```
+
+---
