@@ -108,40 +108,143 @@ await supabase.auth.signInWithOAuth({
 
 ---
 
-## 🔐 Supabase RLS 設定建議
+## 🧩 資料表sql語法
 
-### ✅ profiles
+### profiles（角色卡）
 
 ```sql
-CREATE POLICY "User owns their profile"
-ON profiles FOR ALL
-USING (auth.uid() = id)
-WITH CHECK (auth.uid() = id);
+create table profiles (
+  id uuid primary key references auth.users(id),
+  username text,
+  avatar_url text,
+  bio text,
+  style text,
+  created_at timestamptz default now()
+);
 ```
 
-### ✅ profile_skills / profile_preferences / availability
+### skills / preferences（靜態資料）
 
 ```sql
-CREATE POLICY "Manage own record"
-ON profile_skills FOR ALL
-USING (auth.uid() = profile_id)
-WITH CHECK (auth.uid() = profile_id);
+create table skills (
+  id int generated always as identity primary key,
+  name text
+);
+
+create table preferences (
+  id int generated always as identity primary key,
+  name text
+);
 ```
 
-> ⚠️ 請複製上述邏輯同樣套用至其他關聯表。
-
-### ✅ projects / missions
+### profile_skills / profile_preferences（多對多關聯）
 
 ```sql
-CREATE POLICY "Project owner access"
-ON projects FOR ALL
-USING (auth.uid() = created_by)
-WITH CHECK (auth.uid() = created_by);
+create table profile_skills (
+  profile_id uuid references profiles(id),
+  skill_id int references skills(id),
+  primary key (profile_id, skill_id)
+);
 
-CREATE POLICY "Mission owner access"
-ON missions FOR ALL
-USING (auth.uid() = created_by)
-WITH CHECK (auth.uid() = created_by);
+create table profile_preferences (
+  profile_id uuid references profiles(id),
+  preference_id int references preferences(id),
+  primary key (profile_id, preference_id)
+);
+```
+
+### availability（時間可投入）
+
+```sql
+create table availability (
+  profile_id uuid primary key references profiles(id),
+  weekly_hours int
+);
+```
+
+### projects
+
+```sql
+create table projects (
+  id uuid primary key default gen_random_uuid(),
+  title text,
+  description text,
+  created_by uuid references profiles(id),
+  created_at timestamptz default now()
+);
+```
+
+### missions
+
+```sql
+create table missions (
+  id uuid primary key default gen_random_uuid(),
+  project_id uuid references projects(id),
+  title text,
+  description text,
+  created_by uuid references profiles(id),
+  created_at timestamptz default now()
+);
+```
+
+---
+
+## 🔐 Supabase RLS 設定 SQL
+
+### profiles
+
+```sql
+alter table profiles enable row level security;
+
+create policy "Users can manage their own profile"
+on profiles for all
+using (auth.uid() = id)
+with check (auth.uid() = id);
+```
+
+### profile_skills / profile_preferences / availability
+
+```sql
+alter table profile_skills enable row level security;
+alter table profile_preferences enable row level security;
+alter table availability enable row level security;
+
+create policy "Users can manage their own skills"
+on profile_skills for all
+using (auth.uid() = profile_id)
+with check (auth.uid() = profile_id);
+
+create policy "Users can manage their own preferences"
+on profile_preferences for all
+using (auth.uid() = profile_id)
+with check (auth.uid() = profile_id);
+
+create policy "Users can manage their availability"
+on availability for all
+using (auth.uid() = profile_id)
+with check (auth.uid() = profile_id);
+```
+
+### projects
+
+```sql
+alter table projects enable row level security;
+
+create policy "Owner can manage projects"
+on projects for all
+using (auth.uid() = created_by)
+with check (auth.uid() = created_by);
+```
+
+### missions
+
+```sql
+alter table missions enable row level security;
+
+create policy "Owner can manage missions"
+on missions for all
+using (auth.uid() = created_by)
+with check (auth.uid() = created_by);
 ```
 
 ---
@@ -152,7 +255,6 @@ WITH CHECK (auth.uid() = created_by);
 npm install
 npm run dev
 ```
-
 ---
 
 ## 🤝 社群與貢獻
@@ -166,3 +268,5 @@ npm run dev
 
 最後更新：2025-06-01  
 作者：黃奇昌｜DungeonTeamUp 共創平台
+
+---
