@@ -1,7 +1,7 @@
 <template>
   <div class="bg-gray-900/90 border border-white/10 rounded-3xl p-6 shadow-xl">
     <div class="flex items-center justify-between mb-6">
-      <h3 class="text-xl font-bold text-white">我的任務</h3>
+        <h3 class="text-xl font-bold text-white">我的任務</h3>
       <button
         v-if="hasProjects"
         @click="showCreateModal = true"
@@ -32,7 +32,7 @@
     <div v-else-if="!profileId" class="text-center py-8">
       <p class="text-gray-400">請先建立角色卡</p>
     </div>
-    
+
     <div v-else-if="missions.length === 0" class="text-center py-8">
       <div class="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
         <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -48,10 +48,10 @@
         建立任務
       </button>
     </div>
-    
+
     <div v-else class="space-y-4">
-      <div 
-        v-for="mission in missions" 
+      <div
+        v-for="mission in missions"
         :key="mission.id"
         class="bg-gray-800/50 border border-gray-700/50 rounded-2xl p-4 hover:border-green-500/30 transition-colors duration-200"
       >
@@ -93,7 +93,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
           </button>
-        </div>
+          </div>
         
         <div class="space-y-4 mb-6">
           <div>
@@ -132,15 +132,15 @@
         
         <div class="flex justify-end space-x-3">
           <button @click="closeCreateModal" class="px-6 py-2 bg-gray-500/20 hover:bg-gray-500/30 border border-gray-500/30 text-gray-300 rounded-xl">
-            取消
-          </button>
-          <button
+              取消
+            </button>
+            <button
             @click="createMission"
             :disabled="!createForm.title.trim() || !createForm.project_id || creating"
             class="px-6 py-2 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-300 rounded-xl disabled:opacity-50"
           >
             {{ creating ? '建立中...' : '建立任務' }}
-          </button>
+            </button>
         </div>
       </div>
     </div>
@@ -203,20 +203,20 @@ const hasProjects = computed(() => projects.value.length > 0)
 // 載入專案
 const loadProjects = async () => {
   if (!props.profileId) return
-
+  
   try {
     loadingProjects.value = true
     const nuxtApp = useNuxtApp()
     const supabase = nuxtApp.$supabase
-
+    
     const { data, error } = await supabase
       .from('projects')
       .select('id, title, description, created_by, created_at')
       .eq('created_by', props.profileId)
       .order('created_at', { ascending: false })
-
+    
     if (error) throw error
-
+    
     projects.value = data || []
 
   } catch (error) {
@@ -230,12 +230,12 @@ const loadProjects = async () => {
 // 載入任務
 const loadMissions = async () => {
   if (!props.profileId) return
-
+  
   try {
     loading.value = true
     const nuxtApp = useNuxtApp()
     const supabase = nuxtApp.$supabase
-
+    
     const { data, error } = await supabase
       .from('missions')
       .select(`
@@ -249,9 +249,9 @@ const loadMissions = async () => {
       `)
       .eq('created_by', props.profileId)
       .order('created_at', { ascending: false })
-
+    
     if (error) throw error
-
+    
     // 處理資料，確保 projects 是單一物件而非陣列
     const processedMissions = (data || []).map((mission: any) => ({
       ...mission,
@@ -265,7 +265,7 @@ const loadMissions = async () => {
     missions.value = []
   } finally {
     loading.value = false
-  }
+}
 }
 
 // 監聽 profileId 變化
@@ -284,7 +284,7 @@ const createMission = async () => {
     creating.value = true
     const nuxtApp = useNuxtApp()
     const supabase = nuxtApp.$supabase
-
+    
     const { data, error } = await supabase
       .from('missions')
       .insert({
@@ -303,9 +303,9 @@ const createMission = async () => {
         projects(title)
       `)
       .single()
-
+    
     if (error) throw error
-
+    
     // 處理回傳的資料
     const processedMission = {
       ...data,
@@ -315,7 +315,7 @@ const createMission = async () => {
     missions.value.unshift(processedMission)
     emit('mission-created', processedMission)
     closeCreateModal()
-
+    
   } catch (error: any) {
     console.error('建立任務失敗:', error)
     alert(error.message || '建立任務失敗，請稍後再試')
@@ -327,22 +327,22 @@ const createMission = async () => {
 // 刪除任務
 const deleteMission = async (mission: Mission) => {
   if (!confirm(`確定要刪除任務「${mission.title}」嗎？此操作無法復原。`)) return
-
+  
   try {
     const nuxtApp = useNuxtApp()
     const supabase = nuxtApp.$supabase
-
+    
     const { error } = await supabase
       .from('missions')
       .delete()
       .eq('id', mission.id)
-
+    
     if (error) throw error
-
+    
     // 從本地資料中移除
     missions.value = missions.value.filter(m => m.id !== mission.id)
     emit('mission-deleted', mission)
-
+    
   } catch (error: any) {
     console.error('刪除任務失敗:', error)
     alert(error.message || '刪除任務失敗，請稍後再試')

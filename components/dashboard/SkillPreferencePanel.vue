@@ -2,7 +2,7 @@
   <div class="bg-gray-900/90 border border-white/10 rounded-3xl p-6 shadow-xl">
     <h3 class="text-xl font-bold text-white mb-6">技能與偏好</h3>
     
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <!-- 技能區塊 -->
       <div>
         <h4 class="text-lg font-semibold text-blue-300 mb-4">技能</h4>
@@ -43,7 +43,7 @@
           </button>
         </div>
       </div>
-
+    
       <!-- 偏好區塊 -->
       <div>
         <h4 class="text-lg font-semibold text-green-300 mb-4">偏好</h4>
@@ -250,7 +250,7 @@ const removeSkill = async (skillId: string) => {
     if (error) throw error
 
     await loadSkills()
-    emit('skills-updated')
+  emit('skills-updated')
 
   } catch (error) {
     console.error('移除技能失敗:', error)
@@ -331,7 +331,7 @@ const removePreference = async (preferenceId: string) => {
     if (error) throw error
 
     await loadPreferences()
-    emit('preferences-updated')
+  emit('preferences-updated')
 
   } catch (error) {
     console.error('移除偏好失敗:', error)
