@@ -1,0 +1,110 @@
+/* 全局按鈕樣式 */
+.btn-primary {
+  @apply px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 rounded-xl text-white font-medium transition-colors duration-200 disabled:opacity-50 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl;
+}
+
+.btn-secondary {
+  @apply px-6 py-2 bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl text-white transition-colors;
+}
+
+.btn-success {
+  @apply px-6 py-2 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 rounded-xl text-white font-medium transition-colors duration-200 disabled:opacity-50 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl;
+}
+
+.btn-danger {
+  @apply px-6 py-2 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-400 hover:to-red-500 rounded-xl text-white font-medium transition-colors duration-200 disabled:opacity-50 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl;
+}
+
+/* 表單輸入樣式 */
+.form-input {
+  @apply w-full bg-black/30 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:ring-blue-500/50 transition-colors duration-200;
+}
+
+.form-select {
+  @apply w-full bg-black/30 border border-white/20 rounded-xl px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:ring-blue-500/50 transition-colors duration-200;
+}
+
+.form-textarea {
+  @apply w-full bg-black/30 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:ring-blue-500/50 transition-colors duration-200 resize-none;
+}
+
+/* 載入動畫 */
+.loading-spinner {
+  @apply w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin;
+}
+
+/* 卡片樣式 */
+.card-container {
+  @apply bg-gray-900/90 border border-white/10 rounded-3xl p-6 shadow-xl transition-colors duration-300;
+}
+
+.card-hover {
+  @apply hover:bg-white/10 hover:border-blue-500/30 cursor-pointer;
+}
+
+/* 模態框樣式 */
+.modal-overlay {
+  @apply fixed inset-0 z-[9999] bg-black/70 flex items-center justify-center;
+}
+
+.modal-content {
+  @apply relative max-w-md w-full mx-4 bg-gray-900/95 border rounded-3xl p-6 shadow-2xl;
+}
+
+/* 動畫 */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-pulse {
+  animation: pulse 4s ease-in-out infinite;
+}
+
+/* 文字截斷 */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 科技風格漸變背景 */
+.tech-gradient {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+}
+
+/* 發光效果 */
+.glow-blue {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+} 
