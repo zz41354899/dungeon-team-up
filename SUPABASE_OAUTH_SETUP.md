@@ -181,5 +181,5 @@ GOOGLE_CLIENT_SECRET=your-google-client-secret
 
 ---
 
-**建立日期**: 2024/12/19  
-**適用版本**: DungeonTeamUp v2.0.0 
+**建立日期**: 2024/6/1  
+**適用版本**: DungeonTeamUp v1.0.0 
