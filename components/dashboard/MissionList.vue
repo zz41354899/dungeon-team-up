@@ -1,12 +1,12 @@
 <template>
-  <div class="bg-gray-900/90 border border-white/10 rounded-3xl p-6 shadow-xl">
-    <div class="flex items-center justify-between mb-6">
-        <h3 class="text-xl font-bold text-white">我的任務</h3>
+  <div class="bg-gray-900/90 border border-white/10 rounded-3xl p-6 shadow-xl max-md:p-4">
+    <div class="flex items-center justify-between mb-6 max-md:flex-col max-md:space-y-3 max-md:items-start max-md:mb-4">
+        <h3 class="text-xl font-bold text-white max-md:text-lg">我的任務</h3>
       <button
         v-if="hasProjects"
         @click="showCreateModal = true"
         :disabled="!profileId"
-        class="px-4 py-2 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-300 rounded-xl transition-colors duration-200 disabled:opacity-50"
+        class="px-4 py-2 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-300 rounded-xl transition-colors duration-200 disabled:opacity-50 max-md:w-full max-md:py-3"
       >
         新增任務
       </button>
@@ -14,69 +14,70 @@
 
     <!-- 無專案提示 -->
     <div v-if="!hasProjects && !loadingProjects" class="text-center py-8">
-      <div class="w-16 h-16 bg-yellow-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-        <svg class="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="w-16 h-16 bg-yellow-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4 max-md:w-12 max-md:h-12">
+        <svg class="w-8 h-8 text-yellow-400 max-md:w-6 max-md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
         </svg>
       </div>
-      <h4 class="text-lg font-semibold text-white mb-2">需要先建立專案</h4>
-      <p class="text-gray-400 mb-4">請先建立一個專案後才能新增任務</p>
+      <h4 class="text-lg font-semibold text-white mb-2 max-md:text-base">需要先建立專案</h4>
+      <p class="text-gray-400 mb-4 max-md:text-sm">請先建立一個專案後才能新增任務</p>
     </div>
 
     <!-- 任務列表 -->
     <div v-else-if="loading" class="text-center py-8">
       <div class="w-8 h-8 border-2 border-green-300/30 border-t-green-300 rounded-full animate-spin mx-auto"></div>
-      <p class="text-gray-400 mt-4">載入任務中...</p>
+      <p class="text-gray-400 mt-4 max-md:text-sm">載入任務中...</p>
     </div>
     
     <div v-else-if="!profileId" class="text-center py-8">
-      <p class="text-gray-400">請先建立角色卡</p>
+      <p class="text-gray-400 max-md:text-sm">請先建立角色卡</p>
     </div>
 
     <div v-else-if="missions.length === 0" class="text-center py-8">
-      <div class="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-        <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4 max-md:w-12 max-md:h-12">
+        <svg class="w-8 h-8 text-green-400 max-md:w-6 max-md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
         </svg>
       </div>
-      <h4 class="text-lg font-semibold text-white mb-2">尚無任務</h4>
-      <p class="text-gray-400 mb-4">開始建立你的第一個任務吧！</p>
+      <h4 class="text-lg font-semibold text-white mb-2 max-md:text-base">尚無任務</h4>
+      <p class="text-gray-400 mb-4 max-md:text-sm">開始建立你的第一個任務吧！</p>
       <button
         @click="showCreateModal = true"
-        class="px-6 py-2 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-300 rounded-xl transition-colors duration-200"
+        class="px-6 py-2 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-300 rounded-xl transition-colors duration-200 max-md:px-4 max-md:py-3"
       >
         建立任務
       </button>
     </div>
 
-    <div v-else class="space-y-4">
+    <div v-else class="space-y-4 max-md:space-y-3">
       <div
         v-for="mission in missions"
         :key="mission.id"
-        class="bg-gray-800/50 border border-gray-700/50 rounded-2xl p-4 hover:border-green-500/30 transition-colors duration-200"
+        class="bg-gray-800/50 border border-gray-700/50 rounded-2xl p-4 hover:border-green-500/30 transition-colors duration-200 max-md:p-3"
       >
-        <div class="flex items-start justify-between">
-          <div class="flex-1 min-w-0">
-            <div class="flex items-center space-x-2 mb-2">
-              <h4 class="text-lg font-semibold text-white">{{ mission.title }}</h4>
-              <span v-if="mission.projects" class="px-2 py-1 bg-blue-500/20 text-blue-300 rounded-lg text-xs">
+        <div class="flex items-start justify-between max-md:flex-col max-md:space-y-3">
+          <div class="flex-1 min-w-0 max-md:w-full">
+            <div class="flex items-center space-x-2 mb-2 max-md:flex-col max-md:items-start max-md:space-x-0 max-md:space-y-2">
+              <h4 class="text-lg font-semibold text-white max-md:text-base">{{ mission.title }}</h4>
+              <span v-if="mission.projects" class="px-2 py-1 bg-blue-500/20 text-blue-300 rounded-lg text-xs max-md:px-1.5 max-md:py-0.5">
                 {{ mission.projects.title }}
               </span>
             </div>
-            <p class="text-gray-400 text-sm mb-3 line-clamp-2">{{ mission.description }}</p>
+            <p class="text-gray-400 text-sm mb-3 line-clamp-2 max-md:text-xs max-md:mb-2">{{ mission.description }}</p>
             <div class="text-xs text-gray-500">
               建立時間：{{ formatDate(mission.created_at) }}
             </div>
           </div>
           
-          <div class="flex space-x-2 ml-4">
+          <div class="flex space-x-2 ml-4 max-md:ml-0 max-md:w-full max-md:justify-end">
             <button
               @click="deleteMission(mission)"
-              class="p-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-300 rounded-lg transition-colors duration-200"
+              class="p-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-300 rounded-lg transition-colors duration-200 max-md:flex-1 max-md:flex max-md:items-center max-md:justify-center max-md:py-3"
             >
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1-1H8a1 1 0 00-1 1v3M4 7h16"/>
               </svg>
+              <span class="ml-2 hidden max-md:inline">刪除任務</span>
             </button>
           </div>
         </div>
@@ -85,9 +86,9 @@
 
     <!-- 建立任務 Modal -->
     <div v-if="showCreateModal" class="fixed inset-0 z-[9999] bg-black/70 flex items-center justify-center">
-      <div class="relative max-w-lg w-full mx-4 bg-gray-900/95 border border-green-500/30 rounded-3xl p-6 shadow-2xl">
-        <div class="flex justify-between items-center mb-6">
-          <h3 class="text-xl font-bold text-white">建立新任務</h3>
+      <div class="relative max-w-lg w-full mx-4 bg-gray-900/95 border border-green-500/30 rounded-3xl p-6 shadow-2xl max-md:max-w-[90vw] max-md:p-4">
+        <div class="flex justify-between items-center mb-6 max-md:mb-4">
+          <h3 class="text-xl font-bold text-white max-md:text-lg">建立新任務</h3>
           <button @click="closeCreateModal" class="p-2 hover:bg-white/10 rounded-full">
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -95,12 +96,12 @@
           </button>
           </div>
         
-        <div class="space-y-4 mb-6">
+        <div class="space-y-4 mb-6 max-md:space-y-4 max-md:mb-4">
           <div>
             <label class="block text-sm font-medium text-gray-300 mb-2">所屬專案 *</label>
             <select 
               v-model="createForm.project_id"
-              class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+              class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-green-500 max-md:py-4"
             >
               <option value="">選擇專案</option>
               <option v-for="project in projects" :key="project.id" :value="project.id">
@@ -114,7 +115,7 @@
             <input 
               v-model="createForm.title"
               type="text" 
-              class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+              class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-green-500 max-md:py-4"
               placeholder="輸入任務名稱"
             />
           </div>
@@ -124,20 +125,20 @@
             <textarea 
               v-model="createForm.description"
               rows="4" 
-              class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+              class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-green-500 max-md:py-4"
               placeholder="描述你的任務..."
             ></textarea>
           </div>
         </div>
         
-        <div class="flex justify-end space-x-3">
-          <button @click="closeCreateModal" class="px-6 py-2 bg-gray-500/20 hover:bg-gray-500/30 border border-gray-500/30 text-gray-300 rounded-xl">
+        <div class="flex justify-end space-x-3 max-md:flex-col max-md:space-x-0 max-md:space-y-3">
+          <button @click="closeCreateModal" class="px-6 py-2 bg-gray-500/20 hover:bg-gray-500/30 border border-gray-500/30 text-gray-300 rounded-xl max-md:w-full max-md:py-3">
               取消
             </button>
             <button
             @click="createMission"
             :disabled="!createForm.title.trim() || !createForm.project_id || creating"
-            class="px-6 py-2 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-300 rounded-xl disabled:opacity-50"
+            class="px-6 py-2 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-300 rounded-xl disabled:opacity-50 max-md:w-full max-md:py-3"
           >
             {{ creating ? '建立中...' : '建立任務' }}
             </button>

@@ -20,25 +20,25 @@
         <div class="absolute inset-0 bg-black/80"></div>
         
         <!-- Modal 內容 -->
-        <div class="relative max-w-lg w-full mx-4 bg-gray-900/95 border border-blue-500/30 rounded-3xl p-8 shadow-2xl shadow-blue-500/20">
-          <div class="text-center mb-8">
-            <div class="w-20 h-20 bg-blue-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <svg class="w-10 h-10 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="relative max-w-lg w-full mx-4 bg-gray-900/95 border border-blue-500/30 rounded-3xl p-8 shadow-2xl shadow-blue-500/20 max-md:max-w-[90vw] max-md:mx-4 max-md:p-6">
+          <div class="text-center mb-8 max-md:mb-6">
+            <div class="w-20 h-20 bg-blue-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6 max-md:w-16 max-md:h-16 max-md:mb-4">
+              <svg class="w-10 h-10 text-blue-400 max-md:w-8 max-md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
               </svg>
             </div>
-            <h2 class="text-3xl font-bold text-white mb-2">建立你的角色卡</h2>
-            <p class="text-gray-400">開始你的冒險之旅！</p>
+            <h2 class="text-3xl font-bold text-white mb-2 max-md:text-2xl">建立你的角色卡</h2>
+            <p class="text-gray-400 max-md:text-sm">開始你的冒險之旅！</p>
           </div>
           
-          <div class="space-y-6 mb-8">
+          <div class="space-y-6 mb-8 max-md:space-y-4 max-md:mb-6">
             <div>
               <label for="modal-username" class="block text-sm font-medium text-gray-300 mb-2">用戶名稱 *</label>
               <input 
                 id="modal-username"
                 v-model="profileForm.username"
                 type="text" 
-                class="form-input"
+                class="form-input max-md:py-4"
                 placeholder="輸入你的用戶名稱"
                 :class="{ 'border-red-500': profileFormErrors.username }"
               />
@@ -51,7 +51,7 @@
                 id="modal-avatar"
                 v-model="profileForm.avatar_url"
                 type="url" 
-                class="form-input"
+                class="form-input max-md:py-4"
                 placeholder="https://example.com/avatar.jpg"
               />
             </div>
@@ -61,7 +61,7 @@
               <select 
                 id="modal-style"
                 v-model="profileForm.style"
-                class="form-select"
+                class="form-select max-md:py-4"
               >
                 <option value="">選擇你的風格</option>
                 <option value="Builder">建造者 - 喜歡構建和創造</option>
@@ -76,17 +76,17 @@
                 id="modal-bio"
                 v-model="profileForm.bio"
                 rows="4" 
-                class="form-textarea"
+                class="form-textarea max-md:py-4"
                 placeholder="介紹一下你自己..."
               ></textarea>
             </div>
           </div>
           
-          <div class="flex justify-end space-x-4">
+          <div class="flex justify-end space-x-4 max-md:space-x-2">
             <button
               @click="createProfile"
               :disabled="isCreatingProfile || !profileForm.username.trim()"
-              class="btn-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-3 shadow-xl"
+              class="btn-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-3 shadow-xl max-md:py-4"
             >
               <div v-if="isCreatingProfile" class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
               <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -101,38 +101,38 @@
       <!-- 主要內容 - 用戶已登入且有角色卡 -->
       <div v-else-if="user" class="relative z-10">
         <!-- 導覽列 -->
-        <nav class="p-6 border-b border-white/10 bg-black/50">
-          <div class="max-w-6xl mx-auto flex justify-between items-center">
+        <nav class="p-6 border-b border-white/10 bg-black/50 max-md:p-4">
+          <div class="max-w-6xl mx-auto flex justify-between items-center max-md:flex-col max-md:space-y-4 max-md:items-start">
             <div class="flex items-center space-x-4">
               <NuxtLink 
                 to="/"
-                class="flex items-center space-x-4 hover:opacity-80 transition-opacity"
+                class="flex items-center space-x-4 hover:opacity-80 transition-opacity max-md:space-x-3"
               >
-                <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
-                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30 max-md:w-8 max-md:h-8">
+                  <svg class="w-6 h-6 text-white max-md:w-5 max-md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                   </svg>
                 </div>
                 <div>
-                  <h1 class="text-xl font-bold bg-gradient-to-r from-white to-blue-300 bg-clip-text text-transparent">
+                  <h1 class="text-xl font-bold bg-gradient-to-r from-white to-blue-300 bg-clip-text text-transparent max-md:text-lg">
                     DungeonTeamUp
                   </h1>
-                  <p class="text-sm text-gray-400">控制面板</p>
+                  <p class="text-sm text-gray-400 max-md:text-xs">控制面板</p>
                 </div>
               </NuxtLink>
             </div>
             
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-4 max-md:w-full max-md:justify-between max-md:space-x-2">
               <NuxtLink 
                 to="/"
-                class="px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl text-white transition-colors duration-200"
+                class="px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl text-white transition-colors duration-200 max-md:px-3 max-md:py-2 max-md:text-sm"
               >
                 返回首頁
               </NuxtLink>
               <button
                 @click="handleLogout"
                 :disabled="isSigningOut"
-                class="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-300 rounded-xl transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                class="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-300 rounded-xl transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed max-md:px-3 max-md:py-2 max-md:text-sm"
               >
                 <span v-if="isSigningOut" class="flex items-center space-x-2">
                   <div class="w-4 h-4 border-2 border-red-300/30 border-t-red-300 rounded-full animate-spin"></div>
@@ -145,15 +145,15 @@
         </nav>
 
         <!-- 主要內容 -->
-        <main class="max-w-6xl mx-auto p-6 lg:p-8 space-y-8">
+        <main class="max-w-6xl mx-auto p-6 lg:p-8 space-y-8 max-md:p-4 max-md:space-y-6">
           <!-- 歡迎區域 -->
-          <div class="text-center">
-            <h2 class="text-4xl lg:text-5xl font-bold mb-4">
+          <div class="text-center max-md:text-left">
+            <h2 class="text-4xl lg:text-5xl font-bold mb-4 max-md:text-2xl max-md:mb-2">
               <span class="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                 歡迎回來，{{ profile?.username || user.email?.split('@')[0] || '冒險者' }}！
               </span>
             </h2>
-            <p class="text-xl text-gray-400">準備好開始新的冒險了嗎？</p>
+            <p class="text-xl text-gray-400 max-md:text-base">準備好開始新的冒險了嗎？</p>
           </div>
 
           <!-- 個人資料卡 -->

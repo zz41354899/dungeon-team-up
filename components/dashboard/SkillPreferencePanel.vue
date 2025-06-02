@@ -1,43 +1,43 @@
 <template>
-  <div class="bg-gray-900/90 border border-white/10 rounded-3xl p-6 shadow-xl">
-    <h3 class="text-xl font-bold text-white mb-6">技能與偏好</h3>
+  <div class="bg-gray-900/90 border border-white/10 rounded-3xl p-6 shadow-xl max-md:p-4">
+    <h3 class="text-xl font-bold text-white mb-6 max-md:text-lg max-md:mb-4">技能與偏好</h3>
     
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 max-md:gap-6">
       <!-- 技能區塊 -->
       <div>
-        <h4 class="text-lg font-semibold text-blue-300 mb-4">技能</h4>
-        <div v-if="skills.length > 0" class="flex flex-wrap gap-2 mb-4">
+        <h4 class="text-lg font-semibold text-blue-300 mb-4 max-md:text-base">技能</h4>
+        <div v-if="skills.length > 0" class="flex flex-wrap gap-2 mb-4 max-md:mb-3">
           <span 
             v-for="skill in skills" 
             :key="skill.id"
-            class="inline-flex items-center px-3 py-1 bg-blue-500/20 text-blue-300 rounded-lg text-sm"
+            class="inline-flex items-center px-3 py-1 bg-blue-500/20 text-blue-300 rounded-lg text-sm max-md:px-2 max-md:py-1 max-md:text-xs"
           >
             {{ skill.name }}
             <button 
               @click="removeSkill(skill.id)"
-              class="ml-2 hover:text-red-300"
+              class="ml-2 hover:text-red-300 max-md:ml-1"
             >
               ×
             </button>
           </span>
         </div>
-        <div v-else class="text-gray-400 text-sm mb-4">
+        <div v-else class="text-gray-400 text-sm mb-4 max-md:text-xs max-md:mb-3">
           尚未設定任何技能
         </div>
         
         <!-- 新增技能 -->
-        <div class="flex space-x-2">
+        <div class="flex space-x-2 max-md:flex-col max-md:space-x-0 max-md:space-y-3">
           <input 
             v-model="newSkill"
             @keyup.enter="addSkill"
             type="text" 
             placeholder="新增技能"
-            class="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 max-md:py-4 max-md:w-full"
           />
           <button
             @click="addSkill"
             :disabled="!newSkill.trim() || addingSkill"
-            class="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-300 rounded-lg text-sm transition-colors duration-200 disabled:opacity-50"
+            class="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-300 rounded-lg text-sm transition-colors duration-200 disabled:opacity-50 max-md:py-4 max-md:w-full"
           >
             {{ addingSkill ? '新增中...' : '新增' }}
           </button>
@@ -46,39 +46,39 @@
     
       <!-- 偏好區塊 -->
       <div>
-        <h4 class="text-lg font-semibold text-green-300 mb-4">偏好</h4>
-        <div v-if="preferences.length > 0" class="flex flex-wrap gap-2 mb-4">
+        <h4 class="text-lg font-semibold text-green-300 mb-4 max-md:text-base">偏好</h4>
+        <div v-if="preferences.length > 0" class="flex flex-wrap gap-2 mb-4 max-md:mb-3">
           <span 
             v-for="preference in preferences" 
             :key="preference.id"
-            class="inline-flex items-center px-3 py-1 bg-green-500/20 text-green-300 rounded-lg text-sm"
+            class="inline-flex items-center px-3 py-1 bg-green-500/20 text-green-300 rounded-lg text-sm max-md:px-2 max-md:py-1 max-md:text-xs"
           >
             {{ preference.name }}
             <button 
               @click="removePreference(preference.id)"
-              class="ml-2 hover:text-red-300"
+              class="ml-2 hover:text-red-300 max-md:ml-1"
             >
               ×
             </button>
           </span>
         </div>
-        <div v-else class="text-gray-400 text-sm mb-4">
+        <div v-else class="text-gray-400 text-sm mb-4 max-md:text-xs max-md:mb-3">
           尚未設定任何偏好
         </div>
         
         <!-- 新增偏好 -->
-        <div class="flex space-x-2">
+        <div class="flex space-x-2 max-md:flex-col max-md:space-x-0 max-md:space-y-3">
           <input 
             v-model="newPreference"
             @keyup.enter="addPreference"
             type="text" 
             placeholder="新增偏好"
-            class="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            class="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-500 max-md:py-4 max-md:w-full"
           />
           <button
             @click="addPreference"
             :disabled="!newPreference.trim() || addingPreference"
-            class="px-4 py-2 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-300 rounded-lg text-sm transition-colors duration-200 disabled:opacity-50"
+            class="px-4 py-2 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-300 rounded-lg text-sm transition-colors duration-200 disabled:opacity-50 max-md:py-4 max-md:w-full"
           >
             {{ addingPreference ? '新增中...' : '新增' }}
           </button>
@@ -250,7 +250,7 @@ const removeSkill = async (skillId: string) => {
     if (error) throw error
 
     await loadSkills()
-  emit('skills-updated')
+    emit('skills-updated')
 
   } catch (error) {
     console.error('移除技能失敗:', error)
@@ -331,7 +331,7 @@ const removePreference = async (preferenceId: string) => {
     if (error) throw error
 
     await loadPreferences()
-  emit('preferences-updated')
+    emit('preferences-updated')
 
   } catch (error) {
     console.error('移除偏好失敗:', error)

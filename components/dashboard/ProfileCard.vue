@@ -1,44 +1,47 @@
 <template>
-  <div class="bg-gray-900/90 border border-white/10 rounded-3xl p-6 shadow-xl">
-    <div class="flex items-start space-x-6">
+  <div class="bg-gray-900/90 border border-white/10 rounded-3xl p-6 shadow-xl max-md:p-4">
+    <div class="flex items-start space-x-6 max-md:flex-col max-md:space-x-0 max-md:space-y-4">
       <!-- 頭像 -->
-      <div class="flex-shrink-0">
-        <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg">
+      <div class="flex-shrink-0 max-md:self-center">
+        <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg max-md:w-16 max-md:h-16">
           <img 
             v-if="profile?.avatar_url" 
             :src="profile.avatar_url" 
             :alt="profile.username"
             class="w-full h-full rounded-2xl object-cover"
           />
-          <svg v-else class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg v-else class="w-10 h-10 text-white max-md:w-8 max-md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
           </svg>
         </div>
       </div>
 
       <!-- 個人資料內容 -->
-      <div class="flex-1 min-w-0">
-        <div class="flex items-center justify-between mb-4">
-          <div>
-            <h3 class="text-2xl font-bold text-white">{{ profile?.username }}</h3>
-            <p class="text-gray-400">{{ userEmail }}</p>
+      <div class="flex-1 min-w-0 max-md:w-full">
+        <div class="flex items-center justify-between mb-4 max-md:flex-col max-md:space-y-3 max-md:items-start">
+          <div class="max-md:w-full max-md:text-center">
+            <h3 class="text-2xl font-bold text-white max-md:text-xl">{{ profile?.username }}</h3>
+            <p class="text-gray-400 max-md:text-sm">{{ userEmail }}</p>
           </div>
           <button
             @click="isEditing = !isEditing"
-            class="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-300 rounded-xl transition-colors duration-200"
+            class="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-300 rounded-xl transition-colors duration-200 flex items-center space-x-2 max-md:w-full max-md:justify-center max-md:py-3"
           >
-            {{ isEditing ? '取消編輯' : '編輯資料' }}
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+            </svg>
+            <span>{{ isEditing ? '取消編輯' : '編輯資料' }}</span>
           </button>
         </div>
 
         <!-- 編輯模式 -->
-        <div v-if="isEditing" class="space-y-4">
+        <div v-if="isEditing" class="space-y-4 max-md:space-y-4">
           <div>
             <label class="block text-sm font-medium text-gray-300 mb-2">用戶名稱</label>
             <input 
               v-model="editForm.username"
               type="text" 
-              class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 max-md:py-4"
             />
           </div>
           
@@ -47,7 +50,7 @@
             <input 
               v-model="editForm.avatar_url"
               type="url" 
-              class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 max-md:py-4"
             />
           </div>
           
@@ -55,7 +58,7 @@
             <label class="block text-sm font-medium text-gray-300 mb-2">角色風格</label>
             <select 
               v-model="editForm.style"
-              class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 max-md:py-4"
             >
               <option value="">選擇風格</option>
               <option value="Builder">建造者</option>
@@ -69,21 +72,21 @@
             <textarea 
               v-model="editForm.bio"
               rows="3" 
-              class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 max-md:py-4"
             ></textarea>
           </div>
 
-          <div class="flex space-x-3">
+          <div class="flex space-x-3 max-md:flex-col max-md:space-x-0 max-md:space-y-3">
             <button
               @click="saveProfile"
               :disabled="isSaving"
-              class="px-6 py-2 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-300 rounded-xl transition-colors duration-200 disabled:opacity-50"
+              class="px-6 py-2 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-300 rounded-xl transition-colors duration-200 disabled:opacity-50 max-md:w-full max-md:py-3"
             >
               {{ isSaving ? '儲存中...' : '儲存' }}
             </button>
             <button
               @click="cancelEdit"
-              class="px-6 py-2 bg-gray-500/20 hover:bg-gray-500/30 border border-gray-500/30 text-gray-300 rounded-xl transition-colors duration-200"
+              class="px-6 py-2 bg-gray-500/20 hover:bg-gray-500/30 border border-gray-500/30 text-gray-300 rounded-xl transition-colors duration-200 max-md:w-full max-md:py-3"
             >
               取消
             </button>
@@ -91,18 +94,18 @@
         </div>
 
         <!-- 顯示模式 -->
-        <div v-else class="space-y-3">
+        <div v-else class="space-y-3 max-md:space-y-2 max-md:text-center">
           <div v-if="profile?.style">
             <span class="inline-flex items-center px-3 py-1 bg-blue-500/20 text-blue-300 rounded-lg text-sm">
               {{ profile.style }}
             </span>
           </div>
           
-          <div v-if="profile?.bio" class="text-gray-300">
+          <div v-if="profile?.bio" class="text-gray-300 max-md:text-sm">
             <p>{{ profile.bio }}</p>
           </div>
           
-          <div class="text-sm text-gray-400">
+          <div class="text-sm text-gray-400 max-md:text-xs">
             建立時間：{{ formatDate(profile?.created_at) }}
           </div>
         </div>
